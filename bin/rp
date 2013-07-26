@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+require 'Rp'
+
+if ARGV.any?
+  ARGV.each do |f|
+    print Rp.parse(File.open(f, "r").each_line)
+  end
+else
+  puts "Rp [file1] [file2] ..."
+end
