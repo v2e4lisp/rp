@@ -1,7 +1,8 @@
 require "rp/version"
-require "Rhtml"
+require "rhtml"
 
 module Rp
+  include Rhtml
   extend self
 
   INDENT_SIZE = 2
@@ -12,7 +13,7 @@ module Rp
   end
 
   def ends s, n=0
-    n.times {|i| @doc << "\n" << INDENT*(s-i) << "end"} if s > 0
+    n.times {|i| @doc << "\n" << INDENT*(s-i) << "end"} if s >= 0
   end
 
   def parse(lines)
@@ -37,7 +38,9 @@ module Rp
       end
     end
 
-    ends(@indent - 1, @indent)
+    ends(@indent-1, @indent)
     eval(@doc)
+
   end
 end
+print Rp.parse(open(File.expand_path("../tmp/test.r")).readlines)
