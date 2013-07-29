@@ -43,4 +43,3 @@ module Rp
 
   end
 end
-print Rp.parse(open(File.expand_path("../tmp/test.r")).readlines)
