@@ -2,9 +2,13 @@
 require 'Rp'
 
 if ARGV.any?
+  method = :to_html
+  if ARGV.include? '--rhtml'
+    method = :to_rhtml
+  end
   ARGV.each do |f|
-    print Rp.parse(File.open(f, "r").each_line)
+    puts Rp.send(method, File.open(f, "r").each_line) unless f == '--rhtml'
   end
 else
-  puts "Rp [file1] [file2] ..."
+  puts "Rp [--rhtml] [file1] [file2] ..."
 end

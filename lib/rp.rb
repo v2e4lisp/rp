@@ -93,6 +93,5 @@ module Rp
     parse(lines)
   end
 end
-puts Rp.to_rhtml(File.open(File.expand_path("../tmp/test1.r")).readlines)
-puts Rp.to_html(File.open(File.expand_path("../tmp/test1.r")).readlines)
-
+# puts Rp.to_rhtml(File.open(File.expand_path("../tmp/test1.r")).readlines)
+# puts Rp.to_html(File.open(File.expand_path("../tmp/test1.r")).readlines)
