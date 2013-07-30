@@ -39,8 +39,8 @@ module Rp
         end
 
     t = ""
-    t << "#{INDENT*i}@class_and_id[:class] = '#{cls}'\n" if cls.size != 0
-    t << "#{INDENT*i}@class_and_id[:id] = '#{id}'\n"  if id.size != 0
+    t << "#{INDENT*i}@cls = '#{cls}'\n" if cls.size != 0
+    t << "#{INDENT*i}@id = '#{id}'\n"  if id.size != 0
     t << INDENT*i << l
   end
 
@@ -58,7 +58,7 @@ module Rp
         next
       end
 
-      # l = class_and_id l, i
+      l = class_and_id l, i
 
       if i > @indent
         # do
@@ -78,5 +78,4 @@ module Rp
     eval(@doc)
   end
 end
-
-print Rp.parse(File.open(File.expand_path("../tmp/test.r")).readlines)
+# print Rp.parse(File.open(File.expand_path("../tmp/test.r")).readlines)
