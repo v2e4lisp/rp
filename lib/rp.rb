@@ -17,11 +17,32 @@ module Rp
     n.times {|i| @doc << "\n" << INDENT*(s-i) << "end"} if s >= 0
   end
 
+  def indent_and_ends l,i
+    ends @indent-1, @indent-i
+    @indent = i
+    @doc << "\n#{l}"
+  end
+
+  def indent_and_do l,i
+    @doc << " do\n#{l}"
+    @indent = i
+  end
+
+  def indent_line l,i
+    if i > @indent
+      indent_and_do l,i
+    elsif i < @indent
+      indent_and_ends l,i
+    else
+      @doc << "\n#{l}"
+    end
+  end
+
   def class_and_id l, i
     cls = ""
     id = ""
 
-    parts = l.split(" ", 1)
+    parts = l.split(" ", 2)
     t1, t2 = parts[0].split("#")
     tmp = t1.split(".")
     tag_name = tmp.shift
@@ -54,28 +75,24 @@ module Rp
 
       if l[0..1] == CODE_MARK
         l.gsub!(/#{CODE_MARK} */, INDENT * i)
-        @doc << "\n#{l}"
-        next
-      end
-
-      l = class_and_id l, i
-
-      if i > @indent
-        # do
-        @doc << " do\n" << l
-        @indent = i
-      elsif i < @indent
-        # end
-        ends @indent-1, @indent-i
-        @indent = i
-        @doc << "\n" << l
       else
-        @doc << "\n" << l
+        l = class_and_id l, i
       end
-    end
 
+      indent_line l,i
+    end
     ends(@indent-1, @indent)
-    eval(@doc)
+    @doc
+  end
+
+  def to_html lines
+    eval(parse(lines))
+  end
+
+  def to_rhtml lines
+    parse(lines)
   end
 end
-# print Rp.parse(File.open(File.expand_path("../tmp/test.r")).readlines)
+puts Rp.to_rhtml(File.open(File.expand_path("../tmp/test1.r")).readlines)
+puts Rp.to_html(File.open(File.expand_path("../tmp/test1.r")).readlines)
+
