@@ -7,7 +7,7 @@ module Rp
 
   INDENT_SIZE = 2
   INDENT = " " * INDENT_SIZE
-  CODE_MARK = "--"
+  CODE_MARK = "-"
   CODE_MARK_SIZE = CODE_MARK.size
 
   def indent(line)
@@ -77,8 +77,8 @@ module Rp
 
       if l[0...CODE_MARK_SIZE] == CODE_MARK
         l = INDENT*i << l[CODE_MARK_SIZE..-1].lstrip
-      elsif l[0..1] == "=="
-        l = INDENT*i << "self." << l
+      elsif l[0] == "="
+        l = INDENT*i << "self.=" << l
       else
         l = class_and_id l, i
       end
