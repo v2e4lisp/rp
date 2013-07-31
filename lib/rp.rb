@@ -7,7 +7,8 @@ module Rp
 
   INDENT_SIZE = 2
   INDENT = " " * INDENT_SIZE
-  CODE_MARK = ">>"
+  CODE_MARK = "--"
+  CODE_MARK_SIZE = CODE_MARK.size
 
   def indent(line)
     (line.size - line.lstrip.size)/INDENT_SIZE
@@ -68,19 +69,23 @@ module Rp
   def parse(lines)
     @doc = ""
     @indent = 0
+
     lines.each do |l|
       i = indent l
       l.strip!
       next if l.empty?
 
-      if l[0..1] == CODE_MARK
-        l.gsub!(/#{CODE_MARK} */, INDENT * i)
+      if l[0...CODE_MARK_SIZE] == CODE_MARK
+        l = INDENT*i << l[CODE_MARK_SIZE..-1].lstrip
+      elsif l[0..1] == "=="
+        l = INDENT*i << "self." << l
       else
         l = class_and_id l, i
       end
 
       indent_line l,i
     end
+
     ends(@indent-1, @indent)
     @doc
   end

@@ -18,51 +18,123 @@ Or install it yourself as:
 
 ## Usage
 
-```yaml
+```haml
 html!
-  p "hello world"
-  div class: "user-name", id: "first-one"
-    title "hello title"
-    >> a = "hell world"
-    >> (1..4).each do |x|
-    >> a << " again"
-    div a
-    >> end
-  div class: "nothing"
-  p "done"
+  head
+    script type: "text/javascript", src: "http://slkdfksja.js"
+  body
+    div#content data_para: "hello world"
+      p.first "first p"
+      p.second-p#special-p
+        "special p"
+      -- a = "username"
+      p
+        -- b = "<b>---------------x--------------</b>"
+        == b
+        -- a.split("").each do |x|
+        font x
+        -- end
+      p
+        "helloworld"
+      div.comments.hahaha
+        p.a-comment#no-comment "no comments yet!"
 ```
 
-output
+**FIRST, converted to ruby code**
+
+```ruby
+html! do
+  head do
+    script type: "text/javascript", src: "http://slkdfksja.js"
+  end
+  body do
+    @id = 'content'
+    div data_para: "hello world" do
+      @cls = 'first'
+      p "first p"
+      @cls = 'second-p'
+      @id = 'special-p'
+      p do
+        "special p"
+      end
+      a = "username"
+      p do
+        b = "<b>---------------x--------------</b>"
+        self.== b
+        a.split("").each do |x|
+        font x
+        end
+      end
+      p do
+        "helloworld"
+      end
+      @cls = 'comments hahaha'
+      div do
+        @cls = 'a-comment'
+        @id = 'no-comment'
+        p "no comments yet!"
+      end
+    end
+  end
+end
+```
+
+**OUTPUT html**
 
 ```html
 <html>
-  <p>
-    hello world
-  </p>
-  <div class='user-name' id='first-one'>
-    <title>
-      hello title
-    </title>
-    <div>
-      hell world again
+  <head>
+    <script type='text/javascript' src='http://slkdfksja.js'>
+    </script>
+  </head>
+  <body>
+    <div data-para='hello world' id='content'>
+      <p class='first'>
+        first p
+      </p>
+      <p class='second-p' id='special-p'>
+        special p
+      </p>
+      <p>
+<b>---------------x--------------</b>
+        <font>
+          u
+        </font>
+        <font>
+          s
+        </font>
+        <font>
+          e
+        </font>
+        <font>
+          r
+        </font>
+        <font>
+          n
+        </font>
+        <font>
+          a
+        </font>
+        <font>
+          m
+        </font>
+        <font>
+          e
+        </font>
+      </p>
+      <p>
+        helloworld
+      </p>
+      <div class='comments hahaha'>
+        <p class='a-comment' id='no-comment'>
+          no comments yet!
+        </p>
+      </div>
     </div>
-    <div>
-      hell world again again
-    </div>
-    <div>
-      hell world again again again
-    </div>
-    <div>
-      hell world again again again again
-    </div>
-  </div>
-  <div class='nothing'>
-  </div>
-  <p>
-    done
-  </p>
+  </body>
 </html>
 ```
+
 
 ## Contributing
 
