@@ -27,13 +27,13 @@ html!
       p.first "first p"
       p.second-p#special-p
         "special p"
-      -- a = "username"
+      - a = "username"
       p
-        -- b = "<b>---------------x--------------</b>"
-        == b
-        -- a.split("").each do |x|
+        - b = "<b>---------------x--------------</b>"
+        = b
+        - a.split("").each do |x|
         font x
-        -- end
+        - end
       p
         "helloworld"
       div.comments.hahaha
@@ -77,6 +77,7 @@ html! do
     end
   end
 end
+
 ```
 
 **OUTPUT html**
