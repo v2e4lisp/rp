@@ -1,8 +1,6 @@
 require "rp/version"
-require "rhtml"
 
 module Rp
-  include Rhtml
   extend self
 
   INDENT_SIZE = 2
@@ -61,13 +59,13 @@ module Rp
         end
 
     t = ""
-    t << "#{INDENT*i}@cls = '#{cls}'\n" if cls.size != 0
-    t << "#{INDENT*i}@id = '#{id}'\n"  if id.size != 0
+    t << "#{INDENT*i}@__cls = '#{cls}'\n" if cls.size != 0
+    t << "#{INDENT*i}@__id = '#{id}'\n"  if id.size != 0
     t << INDENT*i << l
   end
 
   def parse(lines)
-    @doc = ""
+    @doc = "require 'rhtml'\ninclude Rhtml\nHtml.new do\n"
     @indent = 0
 
     lines.each do |l|
@@ -87,7 +85,7 @@ module Rp
     end
 
     ends(@indent-1, @indent)
-    @doc
+    @doc << "\nend"
   end
 
   def to_html lines
@@ -98,5 +96,6 @@ module Rp
     parse(lines)
   end
 end
+
 # puts Rp.to_rhtml(File.open(File.expand_path("../tmp/test1.r")).readlines)
 # puts Rp.to_html(File.open(File.expand_path("../tmp/test1.r")).readlines)
