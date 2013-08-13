@@ -59,8 +59,8 @@ module Rp
         end
 
     t = ""
-    t << "#{INDENT*i}@__cls = '#{cls}'\n" if cls.size != 0
-    t << "#{INDENT*i}@__id = '#{id}'\n"  if id.size != 0
+    t << "#{INDENT*i}@__ps[:class] = '#{cls}'\n" if cls.size != 0
+    t << "#{INDENT*i}@__ps[:id] = '#{id}'\n"  if id.size != 0
     t << INDENT*i << l
   end
 
